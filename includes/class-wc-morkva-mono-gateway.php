@@ -124,9 +124,13 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
         $mrkvmonoOrder->mrkv_mono_setReference($mrkv_mono_order->get_id());
         $mrkvmonoOrder->mrkv_mono_setAmount(round($mrkv_mono_order->get_total()*100));
         $mrkvmonoOrder->mrkv_mono_setBasketOrder($mrkv_mono_basket_info);
-        $mrkvmonoOrder->mrkv_mono_setRedirectUrl('https://' . $_SERVER['HTTP_HOST'] . '/checkout/order-received/' . $mrkv_mono_order->get_id() . '/?key=' . $mrkv_mono_order->get_order_key());
-        $mrkvmonoOrder->mrkv_mono_setWebHookUrl('https://' . $_SERVER['HTTP_HOST'] . '/?wc-api=morkva-monopay');
 
+        # Check 
+        $web_url = sanitize_text_field($_SERVER['HTTP_HOST']);
+        if($web_url){
+            $mrkvmonoOrder->mrkv_mono_setRedirectUrl('https://' . $web_url . '/checkout/order-received/' . $mrkv_mono_order->get_id() . '/?key=' . $mrkv_mono_order->get_order_key());
+            $mrkvmonoOrder->mrkv_mono_setWebHookUrl('https://' . $web_url . '/?wc-api=morkva-monopay');
+        }
 
         # Create Payment object 
         $mrkv_mono_payment = new Morkva_Mono_Payment($mrkv_mono_token);
