@@ -42,6 +42,11 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
         add_action('woocommerce_api_morkva-monopay', array($this, 'mrkv_mono_callback_success'));
         
+        # Callback function
+        add_action('woocommerce_thankyou_'.$this->id, array( $this, 'return_handler' ) );
+
+        # Add payment image
+        add_filter( 'woocommerce_gateway_icon', array( $this, 'morkva_monopay_gateway_icon' ), 10, 2 );
     }
 
     /**
@@ -76,7 +81,20 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
                 'type' => 'text',
                 'description' => __( 'You can find out your X-Token by the link: <a href="https://web.monobank.ua/" target="blank">web.monobank.ua</a>', 'morkva-monobank-extended' ),
                 'default' => '',
-            )
+            ),
+            'url_monobank_img' => array(
+                'title'       => __( 'URL Monobank Icon', 'morkva-monobank-extended' ),
+                'type'        => 'text',
+                'desc_tip'    => true,
+                'description' => __( 'Enter full url to image', 'morkva-monobank-extended' ),
+                'default'     => '',
+            ),
+            'hide_image' => array(
+                'title' => __( 'Hide payment image', 'morkva-monobank-extended' ),
+                'type' => 'checkbox',
+                'label' => __( 'Check if need hide payment image', 'morkva-monobank-extended' ),
+                'default' => 'no'
+            ),
         );
     }
 
@@ -112,7 +130,7 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
             # Set product data
             $mrkv_mono_basket_info[] = [
                 "name" => $mrkv_mono_product['data']->name,
-                "qty"  => $mrkv_mono_product['quantity'],
+                "qty"  => intval($mrkv_mono_product['quantity']),
                 "sum"  => round($mrkv_mono_product['line_total']*100),
                 "icon" => $mrkv_mono_image[1][0]
             ];
@@ -120,6 +138,9 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
 
         # Set order data to send query
         $mrkvmonoOrder = new Morkva_Mono_Order();
+
+        # Set data
+        $mrkvmonoOrder->mrkv_mono_setCurrency($mrkv_mono_order->get_currency());
         $mrkvmonoOrder->mrkv_mono_setId($mrkv_mono_order->get_id());
         $mrkvmonoOrder->mrkv_mono_setReference($mrkv_mono_order->get_id());
         $mrkvmonoOrder->mrkv_mono_setAmount(round($mrkv_mono_order->get_total()*100));
@@ -129,7 +150,7 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
         $web_url = sanitize_text_field($_SERVER['HTTP_HOST']);
         if($web_url){
             $mrkvmonoOrder->mrkv_mono_setRedirectUrl('https://' . $web_url . '/checkout/order-received/' . $mrkv_mono_order->get_id() . '/?key=' . $mrkv_mono_order->get_order_key());
-            $mrkvmonoOrder->mrkv_mono_setWebHookUrl('https://' . $web_url . '/?wc-api=morkva-monopay');
+            $mrkvmonoOrder->mrkv_mono_setWebHookUrl('https://' . $web_url . '/checkout/order-received/' . $mrkv_mono_order->get_id() . '/?key=' . $mrkv_mono_order->get_order_key());
         }
 
         # Create Payment object 
@@ -170,6 +191,36 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
             'result'   => 'success',
             'redirect' => $mrkv_mono_invoice->pageUrl,
         ];
+    }
+
+    /**
+     * Add custom gateway icon
+     * 
+     * @var string Icon
+     * @var string Payment id
+     * */
+    function morkva_monopay_gateway_icon( $icon, $id ) {
+        if ( $id === 'morkva-monopay' ) {
+            if($this->get_option( 'hide_image' ) == 'no'){
+                if($this->get_option( 'url_monobank_img' )){
+                    return '<img src="' . $this->get_option( 'url_monobank_img' ) . '" > '; 
+                }
+                else{
+                    return '<img src="' . plugins_url( '../assets/images/monopay_light_bg.png', __FILE__ ) . '" > ';    
+                }
+            }
+        } else {
+            return $icon;
+        }
+    }
+
+    /**
+     * Add Callback function. Handle
+     * */
+    public function return_handler() 
+    {
+        # Main callback
+        $this->mrkv_mono_callback_success();
     }
 
     /**

@@ -3,7 +3,7 @@ Contributors: bandido
 Plugin Name: Morkva Monobank Extended
 Tags: Mono, MonoPay, Моно, Монопей, Монобанк, Monobank
 Tested up to: 6.1
-Stable tag: 0.0.1
+Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,3 +30,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 Потрібна підтримка чи додатковий функціонал? support@morkva.co.ua
+
+= 0.1.0 =
+* [fixed] поправили callback, тепер він працює на сторінці thank you
+* [new] додали підтримку USD, EUR (банк все рівно проведе конвертацію у гривні за своїм курсом)
+* [new] одали можливість додати іконку до назви оплаты
+
+= 0.0.1 =
+* реліз плагіна

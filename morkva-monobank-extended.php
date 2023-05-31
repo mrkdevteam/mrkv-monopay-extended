@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Morkva Monobank Extended
  * Description: Monobank Payment Gateway with callback by Morkva
- * Version: 0.0.1
+ * Version: 0.1.0
  * Tested up to: 6.1
  * Requires at least: 5.2
  * Requires PHP: 7.1
@@ -62,15 +62,8 @@ function mrkv_mono_init_mono_gateway_class()
  * */
 function mrkv_mono_add_mono_gateway_class( $methods ) 
 {
-    # Get current currency 
-    $currency_code = get_woocommerce_currency();
-
-    # Do if currency is uah
-    if ($currency_code == 'UAH') 
-    {
-        # Include Morkva Monopay
-        $methods[] = 'WC_Gateway_Morkva_Mono';
-    }
+    # Include Morkva Monopay
+    $methods[] = 'WC_Gateway_Morkva_Mono';
 
     # Return all methods
     return $methods;

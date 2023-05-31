@@ -21,7 +21,7 @@ class Morkva_Mono_Order
     /**
      * @var integer Currency number
      * */
-    protected $mrkv_mono_ccy = 980;
+    protected $mrkv_mono_ccy;
 
     /**
      * @var string Reference payment
@@ -154,8 +154,29 @@ class Morkva_Mono_Order
      * */
     public function mrkv_mono_getCurrency(): int
     {
+        # Set Iso code
+        $iso_code = '';
+
+        # Swtich currency code
+        switch($this->mrkv_mono_ccy){
+            case 'UAH':
+                $iso_code = "980";
+            break;
+            case 'USD':
+                $iso_code = "840";
+            break;
+            case 'EUR':
+                $iso_code = "978";
+            break;
+            case 'GBP':
+                $iso_code = "826";
+            break;
+            default:
+                $iso_code = "980";
+        }
+
         # Get data
-        return $this->mrkv_mono_ccy;
+        return $iso_code;
     }
 
     /**
