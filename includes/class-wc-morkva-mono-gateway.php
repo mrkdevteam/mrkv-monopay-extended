@@ -72,7 +72,7 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
             ),
             'description' => array(
                 'title' => __( 'Description', 'morkva-monobank-extended' ),
-                'type' => 'text',
+                'type' => 'textarea',
                 'desc_tip' => true,
                 'description' => __( 'This controls the description which the user sees during checkout.', 'morkva-monobank-extended' ),
             ),
@@ -132,7 +132,8 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
                 "name" => $mrkv_mono_product['data']->name,
                 "qty"  => intval($mrkv_mono_product['quantity']),
                 "sum"  => round($mrkv_mono_product['line_total']*100),
-                "icon" => $mrkv_mono_image[1][0]
+                "icon" => $mrkv_mono_image[1][0],
+                "code" => "" . $mrkv_mono_product['product_id']
             ];
         }
 
