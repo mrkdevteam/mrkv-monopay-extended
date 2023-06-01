@@ -232,20 +232,25 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
         # Get content
         $mrkv_mono_callback_json = @file_get_contents('php://input');
 
+        # Get callback data
         $mrkv_mono_callback = json_decode($mrkv_mono_callback_json, true);
 
-        $mrkv_mono_response = new \MorkvaMonoGateway\Morkva_Mono_Response($mrkv_mono_callback);
+        # Check callback data
+        if($mrkv_mono_callback){
+            # Get response
+            $mrkv_mono_response = new \MorkvaMonoGateway\Morkva_Mono_Response($mrkv_mono_callback);
 
-        # Check status
-        if($mrkv_mono_response->mrkv_mono_isComplete()) {
-            global $woocommerce;
+            # Check status
+            if($mrkv_mono_response->mrkv_mono_isComplete()) {
+                global $woocommerce;
 
-            $mrkv_mono_order_id = (int)$mrkv_mono_response->mrkv_mono_getOrderId();
-            $mrkv_mono_order = new WC_Order( $mrkv_mono_order_id );
+                $mrkv_mono_order_id = (int)$mrkv_mono_response->mrkv_mono_getOrderId();
+                $mrkv_mono_order = new WC_Order( $mrkv_mono_order_id );
 
-            $woocommerce->cart->empty_cart();
+                $woocommerce->cart->empty_cart();
 
-            $mrkv_mono_order->payment_complete($mrkv_mono_response->mrkv_mono_getInvoiceId());
+                $mrkv_mono_order->payment_complete($mrkv_mono_response->mrkv_mono_getInvoiceId());
+            }
         }
     }
 
