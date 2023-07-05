@@ -207,7 +207,7 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
                     return '<img src="' . $this->get_option( 'url_monobank_img' ) . '" > '; 
                 }
                 else{
-                    return '<img src="' . plugins_url( '../assets/images/monopay_light_bg.png', __FILE__ ) . '" > ';    
+                    return '<img height="24px" style="max-height:24px;" src="' . plugins_url( '../assets/images/monopay_light_bg.png', __FILE__ ) . '" > ';    
                 }
             }
         } else {

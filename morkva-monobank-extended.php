@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Morkva Monobank Extended
  * Description: Monobank Payment Gateway with callback by Morkva
- * Version: 0.1.0
+ * Version: 0.1.1
  * Tested up to: 6.1
  * Requires at least: 5.2
  * Requires PHP: 7.1
