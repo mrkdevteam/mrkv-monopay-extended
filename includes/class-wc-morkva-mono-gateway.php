@@ -25,7 +25,7 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
         $this->id = 'morkva-monopay';
         $this->icon = apply_filters('woocommerce_mono_icon', '');
         $this->has_fields = true;
-        $this->method_title = _x('Morkva Monobank Payment', 'morkva-monobank-extended');
+        $this->method_title = _x('Morkva Monobank Extended Payment Method', 'morkva-monobank-extended');
         $this->method_description = __('Accept credit card payments on your website via Morkva Monobank payment gateway.', 'morkva-monobank-extended');
         $this->supports[] = 'refunds';
 
@@ -82,18 +82,18 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
                 'description' => __( 'You can find out your X-Token by the link: <a href="https://web.monobank.ua/" target="blank">web.monobank.ua</a>', 'morkva-monobank-extended' ),
                 'default' => '',
             ),
+            'hide_image' => array(
+                'title' => __( 'Hide logo', 'morkva-monobank-extended' ),
+                'type' => 'checkbox',
+                'label' => __( 'If checked, Monopay logo or custom logo will not be displayed by the payment method title', 'morkva-monobank-extended' ),
+                'default' => 'no'
+            ),
             'url_monobank_img' => array(
-                'title'       => __( 'URL Monobank Icon', 'morkva-monobank-extended' ),
+                'title'       => __( 'Custom logo url', 'morkva-monobank-extended' ),
                 'type'        => 'text',
                 'desc_tip'    => true,
                 'description' => __( 'Enter full url to image', 'morkva-monobank-extended' ),
                 'default'     => '',
-            ),
-            'hide_image' => array(
-                'title' => __( 'Hide payment image', 'morkva-monobank-extended' ),
-                'type' => 'checkbox',
-                'label' => __( 'Check if need hide payment image', 'morkva-monobank-extended' ),
-                'default' => 'no'
             ),
         );
     }

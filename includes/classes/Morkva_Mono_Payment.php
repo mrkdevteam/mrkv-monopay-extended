@@ -60,6 +60,7 @@ class Morkva_Mono_Payment
         $mrkv_mono_headers = array(
             'Content-type'  => 'application/json',
             'X-Token' => $this->mrkv_mono_token,
+            'X-Cms' => 'morkva'
         );
 
         # Create request body
