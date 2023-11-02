@@ -3,7 +3,7 @@ Contributors: bandido
 Plugin Name: Morkva Monobank Extended
 Tags: Mono, MonoPay, Моно, Монопей, Монобанк, Monobank
 Tested up to: 6.3
-Stable tag: 0.2.2
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 Потрібна підтримка чи додатковий функціонал? support@morkva.co.ua
+
+= 0.3.0 =
+* [new] додали підтримку High-Performance Order Storage (HPOS)
 
 = 0.2.2 =
 * змінили параметр x-cms
