@@ -129,9 +129,9 @@ class WC_Gateway_Morkva_Mono extends WC_Payment_Gateway
 
             # Set product data
             $mrkv_mono_basket_info[] = [
-                "name" => $mrkv_mono_product['data']->name,
+                "name" => $mrkv_mono_product['data']->get_name(),
                 "qty"  => intval($mrkv_mono_product['quantity']),
-                "sum"  => round($mrkv_mono_product['line_total']*100),
+                "sum"  => round($mrkv_mono_product['line_total']*100) / intval($mrkv_mono_product['quantity']),
                 "icon" => $mrkv_mono_image[1][0],
                 "code" => "" . $mrkv_mono_product['product_id']
             ];
